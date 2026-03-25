@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const skills = await getCollection('skills');
+
+const byAdded = [...skills].sort(
+  (a, b) => b.data.added_at.getTime() - a.data.added_at.getTime(),
+);
+const byStars = [...skills].sort((a, b) => b.data.stars - a.data.stars);
+const byUpdated = [...skills].sort((a, b) =>
+  b.data.last_updated.localeCompare(a.data.last_updated),
+);
+---
+
+<BaseLayout
+  title="Skills 收录 — GitHub Hot"
+  description="Cursor、Codex、Claude Code 等平台的 Agent Skills 精选与说明。"
+  canonicalPath="/skills/"
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-ink">Skills</h1>
+    <p class="mt-2 max-w-2xl text-ink-muted">
+      技能包类型、兼容平台与安装方式见各详情页。推荐配合<a href="/projects/">开源项目</a>一起逛。
+    </p>
+
+    <section class="mt-12">
+      <h2 class="text-lg font-semibold text-ink">最新收录</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byAdded.map((s) => <ProjectCard entry={s} kind="skill" />)}
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-lg font-semibold text-ink">最多 Star（若仓库公开）</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byStars.map((s) => <ProjectCard entry={s} kind="skill" />)}
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-lg font-semibold text-ink">最近更新</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byUpdated.map((s) => <ProjectCard entry={s} kind="skill" />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

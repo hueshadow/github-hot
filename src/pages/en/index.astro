@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const origin = Astro.site ?? Astro.url.origin;
+const rssHref = new URL('/rss.xml', origin).href;
+---
+
+<BaseLayout
+  title="GitHub Hot — Curated OSS &amp; Agent Skills"
+  description="A static directory of notable open-source projects and Cursor / Codex-style skills. Primary content is in Chinese."
+  canonicalPath="/en/"
+  lang="en"
+>
+  <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <p class="text-sm font-medium uppercase tracking-widest text-accent">English (summary)</p>
+    <h1 class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink">GitHub Hot</h1>
+    <p class="mt-4 text-lg text-ink-muted">
+      This site catalogs <strong>popular open-source repositories</strong> and <strong>Agent Skills</strong> (e.g. Cursor,
+      Codex). Each entry has its own page with browse, search (Pagefind), and related picks.
+    </p>
+    <p class="mt-4 text-ink-muted">
+      Detailed write-ups are mainly in <strong>Chinese</strong>. Use the links below to explore the same routes.
+    </p>
+    <ul class="mt-8 list-inside list-disc space-y-2 text-ink">
+      <li><a href="/en/topics/">Trending topics</a> (OpenClaw, Claude Code, agent browser, …)</li>
+      <li><a href="/projects/">Open-source projects</a></li>
+      <li><a href="/skills/">Skills</a></li>
+      <li><a href="/search/">Search</a></li>
+      <li><a href={rssHref}>RSS feed</a></li>
+      <li><a href="/">中文首页</a></li>
+    </ul>
+  </div>
+</BaseLayout>

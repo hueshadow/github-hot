@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SEO_TOPICS } from '../data/seo-topics';
+import { loadAllContent, collectCategories } from '../utils/collections';
+
+const { projects, skills } = await loadAllContent();
+const featured = projects.filter((p) => p.data.is_featured).slice(0, 6);
+const latestProjects = [...projects]
+  .sort((a, b) => b.data.added_at.getTime() - a.data.added_at.getTime())
+  .slice(0, 6);
+const hotProjects = [...projects].sort((a, b) => b.data.stars - a.data.stars).slice(0, 6);
+const latestSkills = [...skills]
+  .sort((a, b) => b.data.added_at.getTime() - a.data.added_at.getTime())
+  .slice(0, 6);
+const categories = collectCategories(projects, skills);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? Astro.url.origin;
+const searchTarget = `${siteUrl}/search/?q={search_term_string}`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'GitHub Hot',
+  url: `${siteUrl}/`,
+  description:
+    '精选 GitHub 热门开源项目与 Cursor、Codex、Claude Code 等平台的 Skills 收录，支持分类浏览与全文搜索。',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: searchTarget,
+    'query-input': 'required name=search_term_string',
+  },
+};
+const topicChips = SEO_TOPICS.slice(0, 8);
+---
+
+<BaseLayout
+  title="GitHub Hot — 热门开源项目与 Skills 收录"
+  description="发现值得关注的 GitHub 项目与好用的 Agent Skills：浏览、分类、搜索与相关推荐。"
+  canonicalPath="/"
+  jsonLd={jsonLd}
+>
+  <section class="border-b border-surface-border bg-gradient-to-b from-surface-card to-surface">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+      <p class="text-sm font-medium uppercase tracking-widest text-accent">Curated for builders</p>
+      <h1 class="mt-3 max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        热门开源项目<br class="hidden sm:block" />与 Skills，一站收录
+      </h1>
+      <p class="mt-4 max-w-xl text-lg text-ink-muted">
+        为开发者与 AI 工具玩家整理高价值仓库与技能包，每个条目独立详情页，可按分类、标签浏览，并支持全文搜索。
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/search/"
+          class="inline-flex items-center justify-center rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white no-underline shadow-card hover:opacity-95"
+          >搜索全站</a
+        >
+        <a
+          href="/projects"
+          class="inline-flex items-center justify-center rounded-xl border border-surface-border bg-surface-card px-5 py-3 text-sm font-semibold text-ink no-underline hover:border-accent/40"
+          >浏览项目</a
+        >
+        <a
+          href="/skills"
+          class="inline-flex items-center justify-center rounded-xl border border-surface-border bg-surface-card px-5 py-3 text-sm font-semibold text-ink no-underline hover:border-accent/40"
+          >浏览 Skills</a
+        >
+        <a
+          href="/topics/"
+          class="inline-flex items-center justify-center rounded-xl border border-surface-border bg-surface-card px-5 py-3 text-sm font-semibold text-ink no-underline hover:border-accent/40"
+          >热门方向</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl space-y-16 px-4 py-12 sm:px-6">
+    <section>
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">开发者热搜方向</h2>
+        <a href="/topics/" class="text-sm font-medium text-accent no-underline">全部话题 →</a>
+      </div>
+      <p class="mt-2 max-w-2xl text-sm text-ink-muted">
+        与 GitHub 生态中增长较快的信息型检索簇对齐（如 OpenClaw、Claude Code、Agent Browser、Vercel Skills 等），按标签与别名聚合本站收录。
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {
+          topicChips.map((t) => (
+            <a
+              href={`/topics/${t.slug}/`}
+              class="inline-flex items-center rounded-full border border-surface-border bg-surface-card px-4 py-2 text-sm font-medium text-ink no-underline hover:border-accent/40"
+            >
+              {t.h1}
+            </a>
+          ))
+        }
+      </div>
+      <p class="mt-3 text-xs text-ink-muted">
+        <a href="/en/topics/" class="text-accent no-underline">English topic index</a>
+      </p>
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">精选推荐</h2>
+        <a href="/projects" class="text-sm font-medium text-accent no-underline">全部项目 →</a>
+      </div>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {featured.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+      {featured.length === 0 && <p class="mt-4 text-sm text-ink-muted">暂无精选，请稍后再来。</p>}
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">分类导航</h2>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {
+          categories.map((c) => (
+            <a
+              href={`/category/${c.slug}/`}
+              class="inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-card px-4 py-2 text-sm font-medium text-ink no-underline hover:border-accent/40"
+            >
+              <span>{c.label}</span>
+              <span class="text-xs text-ink-muted">{c.count}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">最新收录 · 项目</h2>
+      </div>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {latestProjects.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">热门项目 · 按 Star</h2>
+      </div>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {hotProjects.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-2xl font-semibold text-ink">Skills 专区</h2>
+        <a href="/skills" class="text-sm font-medium text-accent no-underline">全部 Skills →</a>
+      </div>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {latestSkills.map((s) => <ProjectCard entry={s} kind="skill" />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

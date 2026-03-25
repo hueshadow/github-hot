@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SEO_TOPICS } from '../../data/seo-topics';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '热门方向',
+  description: '按搜索热度与开发者兴趣聚合的话题索引，对应 GitHub 生态中的信息型检索簇。',
+  url: new URL('/topics/', Astro.site ?? Astro.url.origin).href,
+};
+---
+
+<BaseLayout
+  title="热门方向 — 话题索引 | GitHub Hot"
+  description="OpenClaw、Claude Code、Agent Browser、Vercel Skills 等与 GitHub 热搜相关的精选话题页入口。"
+  canonicalPath="/topics/"
+  jsonLd={jsonLd}
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <h1 class="font-display text-3xl font-semibold text-ink">热门方向</h1>
+    <p class="mt-2 max-w-2xl text-ink-muted">
+      以下话题页根据 <code class="rounded bg-surface px-1 text-sm">tags</code> 与 <code class="rounded bg-surface px-1 text-sm">seo_aliases</code>{' '}
+      自动聚合收录条目，便于承接与 GitHub 热搜相近的<strong>信息型</strong>检索意图。第三方非官方索引。
+    </p>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        SEO_TOPICS.map((t) => (
+          <li>
+            <a
+              href={`/topics/${t.slug}/`}
+              class="block rounded-2xl border border-surface-border bg-surface-card p-5 shadow-card no-underline transition hover:border-accent/40"
+            >
+              <span class="font-display text-lg font-semibold text-ink">{t.h1}</span>
+              <p class="mt-2 line-clamp-2 text-sm text-ink-muted">{t.metaDescription}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-10 text-sm text-ink-muted">
+      <a href="/en/topics/" class="text-accent">English topic index</a>
+    </p>
+  </div>
+</BaseLayout>

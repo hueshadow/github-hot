@@ -1,0 +1,47 @@
+# 推送到 main 时构建并部署到 Cloudflare Pages
+# 在仓库 Settings → Secrets → Actions 中配置：
+#   CLOUDFLARE_API_TOKEN（Pages:Edit 等权限）
+#   CLOUDFLARE_ACCOUNT_ID（仪表盘右侧账户 ID）
+# 并在 Cloudflare 控制台先创建同名 Pages 项目（或使用首次部署时创建）。
+
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site + Pagefind
+        run: npm run build:search
+        # 可选：在仓库 Settings → Variables 配置 PUBLIC_SITE_URL、PUBLIC_GITHUB_REPO，并在本 step 下增加 env 传入
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: github-hot
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

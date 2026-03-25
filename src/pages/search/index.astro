@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="全文搜索 — GitHub Hot"
+  description="在收录的开源项目与 Skills 正文中搜索关键词。"
+  canonicalPath="/search/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <h1 class="font-display text-3xl font-semibold text-ink">搜索</h1>
+    <p class="mt-2 text-sm text-ink-muted">
+      索引由 <strong>Pagefind</strong> 在构建后生成。本地开发请先运行 <code class="rounded bg-surface px-1 py-0.5 text-xs"
+        >npm run build:search</code
+      > 再 <code class="rounded bg-surface px-1 py-0.5 text-xs">npm run preview</code> 查看；生产环境部署请使用带 pagefind 的构建命令。
+    </p>
+    <div id="search" class="mt-8 min-h-[320px] rounded-2xl border border-dashed border-surface-border bg-surface-card p-4">
+      <p class="text-sm text-ink-muted">
+        若未看到搜索框，说明当前环境尚未生成 Pagefind 索引（<code class="rounded bg-surface px-1">/pagefind/</code> 不存在）。
+      </p>
+    </div>
+  </div>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script is:inline>
+    (function () {
+      if (typeof window === 'undefined') return;
+      function init() {
+        if (!window.PagefindUI) return;
+        new window.PagefindUI({
+          element: '#search',
+          showSubResults: true,
+          translations: {
+            placeholder: '搜索项目、Skills、标签…',
+            zero_results: '未找到结果',
+            many_results: '条结果',
+            one_result: '条结果',
+            clear_search: '清除',
+            load_more: '加载更多',
+            searching: '搜索中…',
+            filters: '筛选',
+            sort: '排序',
+          },
+        });
+      }
+      var s = document.createElement('script');
+      s.src = '/pagefind/pagefind-ui.js';
+      s.defer = true;
+      s.onload = init;
+      document.body.appendChild(s);
+    })();
+  </script>
+</BaseLayout>

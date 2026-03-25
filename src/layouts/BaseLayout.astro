@@ -1,0 +1,111 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+type Props = {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  lang?: string;
+  /** og:type，话题页等可传 article */
+  ogType?: string;
+  articlePublishedTime?: string;
+  /** 与英文页成对出现时输出 hreflang，需同时传 En 路径 */
+  hreflangZhPath?: string;
+  hreflangEnPath?: string;
+};
+
+const {
+  title,
+  description = '精选 GitHub 热门开源项目与 Cursor / Codex 等平台的 Skills 收录站。',
+  canonicalPath,
+  ogImage,
+  jsonLd,
+  lang = 'zh-CN',
+  ogType = 'website',
+  articlePublishedTime,
+  hreflangZhPath,
+  hreflangEnPath,
+} = Astro.props;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = canonicalPath ? new URL(canonicalPath, Astro.site).toString() : Astro.url.href;
+const ogUrl = ogImage?.startsWith('http') ? ogImage : ogImage && site ? `${site}${ogImage}` : undefined;
+const origin = Astro.site ?? Astro.url.origin;
+const rssHref = new URL('/rss.xml', origin).href;
+
+const hreflangZh =
+  hreflangZhPath && Astro.site ? new URL(hreflangZhPath, Astro.site).href : undefined;
+const hreflangEn =
+  hreflangEnPath && Astro.site ? new URL(hreflangEnPath, Astro.site).href : undefined;
+const showHreflang = hreflangZh && hreflangEn;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark') document.documentElement.classList.add('dark');
+          else if (t === 'light') document.documentElement.classList.remove('dark');
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+            document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="GitHub Hot" href={rssHref} />
+    {
+      showHreflang && (
+        <>
+          <link rel="alternate" hreflang="zh-CN" href={hreflangZh} />
+          <link rel="alternate" hreflang="en" href={hreflangEn} />
+          <link rel="alternate" hreflang="x-default" href={hreflangZh} />
+        </>
+      )
+    }
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    {ogUrl && <meta property="og:image" content={ogUrl} />}
+    {
+      ogType === 'article' && articlePublishedTime && (
+        <meta property="article:published_time" content={articlePublishedTime} />
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogUrl && <meta name="twitter:image" content={ogUrl} />}
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {
+      jsonLd &&
+        (Array.isArray(jsonLd) ? (
+          jsonLd.map((node) => (
+            <script type="application/ld+json" set:html={JSON.stringify(node)} />
+          ))
+        ) : (
+          <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+        ))
+    }
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header />
+    <main class="flex-1" data-pagefind-body>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

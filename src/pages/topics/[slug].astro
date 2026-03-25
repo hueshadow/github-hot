@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import { SEO_TOPICS, entryMatchesTopic, type SeoTopic } from '../../data/seo-topics';
+
+export function getStaticPaths() {
+  return SEO_TOPICS.map((topic) => ({
+    params: { slug: topic.slug },
+    props: { topic },
+  }));
+}
+
+const { topic } = Astro.props as { topic: SeoTopic };
+
+const projects = await getCollection('projects');
+const skills = await getCollection('skills');
+
+type Row = { entry: (typeof projects)[0] | (typeof skills)[0]; kind: 'project' | 'skill' };
+const rows: Row[] = [];
+
+for (const p of projects) {
+  if (entryMatchesTopic(p.data.tags, p.data.seo_aliases, topic)) {
+    rows.push({ entry: p, kind: 'project' });
+  }
+}
+for (const s of skills) {
+  if (entryMatchesTopic(s.data.tags, s.data.seo_aliases, topic)) {
+    rows.push({ entry: s, kind: 'skill' });
+  }
+}
+
+rows.sort((a, b) => b.entry.data.stars - a.entry.data.stars);
+
+const origin = (Astro.site ?? Astro.url.origin).toString().replace(/\/$/, '');
+const canonicalPath = `/topics/${topic.slug}/`;
+
+const itemListElements = rows.map((r, i) => {
+  const path = r.kind === 'project' ? `/projects/${r.entry.slug}/` : `/skills/${r.entry.slug}/`;
+  return {
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(path, origin + '/').href,
+    name: r.entry.data.name,
+  };
+});
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: topic.h1,
+    description: topic.metaDescription,
+    url: new URL(canonicalPath, origin + '/').href,
+    inLanguage: 'zh-CN',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: topic.h1,
+      numberOfItems: rows.length,
+      itemListElement: itemListElements,
+    },
+  },
+];
+---
+
+<BaseLayout
+  title={topic.pageTitle}
+  description={topic.metaDescription}
+  canonicalPath={canonicalPath}
+  jsonLd={jsonLd}
+  ogType="article"
+  articlePublishedTime={new Date().toISOString()}
+  hreflangZhPath={canonicalPath}
+  hreflangEnPath={`/en/topics/${topic.slug}/`}
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <nav class="text-sm text-ink-muted">
+      <a href="/" class="text-ink-muted no-underline hover:text-accent">首页</a>
+      <span class="mx-2">/</span>
+      <span class="text-ink">热门方向</span>
+    </nav>
+
+    <h1 class="mt-4 font-display text-3xl font-semibold tracking-tight text-ink">{topic.h1}</h1>
+    <div class="prose-github mt-6 max-w-3xl" set:html={topic.introHtml} />
+
+    <p class="mt-6 text-sm text-ink-muted">
+      共匹配 <strong class="text-ink">{rows.length}</strong> 条条目（按 Star 排序）。也可浏览 <a href="/projects/">全部项目</a>、<a
+        href="/skills/">Skills</a
+      > 或使用 <a href="/search/">搜索</a>。
+    </p>
+
+    {
+      rows.length > 0 ? (
+        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {rows.map((r) => (
+            <ProjectCard entry={r.entry} kind={r.kind} />
+          ))}
+        </div>
+      ) : (
+        <p class="mt-10 rounded-2xl border border-dashed border-surface-border bg-surface-card p-8 text-center text-ink-muted">
+          暂无匹配条目。欢迎通过「推荐收录」提交相关仓库，并在 frontmatter 中填写合适的 <code class="text-xs">tags</code> 与{' '}
+          <code class="text-xs">seo_aliases</code>。
+        </p>
+      )
+    }
+  </div>
+</BaseLayout>

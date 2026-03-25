@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+
+const byAdded = [...projects].sort(
+  (a, b) => b.data.added_at.getTime() - a.data.added_at.getTime(),
+);
+const byStars = [...projects].sort((a, b) => b.data.stars - a.data.stars);
+const byUpdated = [...projects].sort((a, b) =>
+  b.data.last_updated.localeCompare(a.data.last_updated),
+);
+---
+
+<BaseLayout
+  title="开源项目收录 — GitHub Hot"
+  description="按最新收录、Star 数、最近更新浏览精选 GitHub 开源项目。"
+  canonicalPath="/projects/"
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-ink">开源项目</h1>
+    <p class="mt-2 max-w-2xl text-ink-muted">
+      每个项目有独立详情页；也可从<a href="/">首页</a>按分类进入，或使用<a href="/search/">搜索</a>。
+    </p>
+
+    <section class="mt-12">
+      <h2 class="text-lg font-semibold text-ink">最新收录</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byAdded.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-lg font-semibold text-ink">最多 Star</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byStars.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="text-lg font-semibold text-ink">最近更新（仓库）</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {byUpdated.map((p) => <ProjectCard entry={p} kind="project" />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

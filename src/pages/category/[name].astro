@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { loadAllContent, collectCategories } from '../../utils/collections';
+
+export async function getStaticPaths() {
+  const { projects, skills } = await loadAllContent();
+  const categories = collectCategories(projects, skills);
+  return categories.map((c) => ({
+    params: { name: c.slug },
+    props: {
+      slug: c.slug,
+      label: c.label,
+    },
+  }));
+}
+
+const { slug, label } = Astro.props;
+const { projects, skills } = await loadAllContent();
+const list: Array<{ entry: (typeof projects)[0] | (typeof skills)[0]; kind: 'project' | 'skill' }> = [
+  ...projects.filter((p) => p.data.category_slug === slug).map((e) => ({ entry: e, kind: 'project' as const })),
+  ...skills.filter((s) => s.data.category_slug === slug).map((e) => ({ entry: e, kind: 'skill' as const })),
+];
+list.sort((a, b) => b.entry.data.stars - a.entry.data.stars);
+---
+
+<BaseLayout
+  title={`分类：${label} — GitHub Hot`}
+  description={`${label} 分类下的开源项目与 Skills 列表。`}
+  canonicalPath={`/category/${slug}/`}
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <nav class="text-sm text-ink-muted">
+      <a href="/" class="text-ink-muted no-underline hover:text-accent">首页</a>
+      <span class="mx-2">/</span>
+      <span class="text-ink">分类</span>
+    </nav>
+    <h1 class="mt-4 font-display text-3xl font-semibold text-ink">{label}</h1>
+    <p class="mt-2 text-ink-muted">共 {list.length} 条条目</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {list.map((item) => <ProjectCard entry={item.entry} kind={item.kind} />)}
+    </div>
+  </div>
+</BaseLayout>

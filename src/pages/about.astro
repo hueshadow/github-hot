@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getRecommendIssueUrl } from '../site.config';
+
+const recommendUrl = getRecommendIssueUrl();
+const origin = Astro.site ?? Astro.url.origin;
+const rssHref = new URL('/rss.xml', origin).href;
+---
+
+<BaseLayout
+  title="关于 GitHub Hot"
+  description="GitHub Hot 的定位、内容维护方式与如何推荐新项目。"
+  canonicalPath="/about/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+    <h1 class="font-display text-3xl font-semibold text-ink">关于</h1>
+    <div class="prose-github mt-8">
+      <p>
+        <strong>GitHub Hot</strong> 是一个静态收录站，聚焦中文读者关心的<strong>热门开源项目</strong>与<strong>Agent
+          Skills</strong>（如 Cursor、Codex、Claude Code 等生态）。每条目有独立页面，便于分享与检索。
+      </p>
+      <h2>订阅更新</h2>
+      <p>
+        全站聚合 feed：<a href={rssHref}>RSS（/rss.xml）</a>，可在阅读器或自动化工具中订阅。邮件周刊（Newsletter）仍在规划中；有明确需求时可通过 Issue 反馈。
+      </p>
+      <h2>内容从哪来？</h2>
+      <p>
+        数据以仓库内 Markdown 文件维护（<code>src/content/projects</code> 与 <code>src/content/skills</code>）。Star、Fork、语言等字段可通过
+        GitHub Actions 脚本定期同步（见仓库 <code>scripts/</code> 与 workflow）。
+      </p>
+      <h2>如何推荐收录？</h2>
+      <p>
+        欢迎提交 <strong>Pull Request</strong> 新增/修正 Markdown，或使用 Issue 模板说明仓库与标签建议。
+        {
+          recommendUrl ? (
+            <span>
+              快捷入口：<a href={recommendUrl} target="_blank" rel="noopener noreferrer">
+                在 GitHub 新建「推荐收录」Issue
+              </a>
+              。
+            </span>
+          ) : (
+            <span>
+              部署时配置环境变量 <code>PUBLIC_GITHUB_REPO=owner/repo</code> 后，导航栏会显示直达 Issue 的链接。
+            </span>
+          )
+        }
+      </p>
+      <h2>免责声明</h2>
+      <p>
+        本站仅作信息整理，不保证第三方仓库的可用性、协议与安全性。请以各项目官方说明为准。
+      </p>
+    </div>
+  </div>
+</BaseLayout>

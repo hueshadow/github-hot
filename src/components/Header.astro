@@ -1,0 +1,72 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { getRecommendIssueUrl } from '../site.config';
+
+const pathname = Astro.url.pathname;
+const link = (href: string) =>
+  pathname === href || (href !== '/' && pathname.startsWith(href));
+const recommendUrl = getRecommendIssueUrl();
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-surface-border bg-surface-card/95 backdrop-blur-md dark:bg-surface-card/90"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/" class="font-display text-lg font-semibold tracking-tight text-ink no-underline">
+      GitHub <span class="text-accent">Hot</span>
+    </a>
+    <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+      <nav class="flex flex-wrap items-center gap-1 text-sm font-medium text-ink-muted sm:gap-2">
+        <a
+          href="/projects"
+          class:list={[
+            'rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink',
+            link('/projects') && 'bg-accent-soft text-ink',
+          ]}>开源项目</a
+        >
+        <a
+          href="/skills"
+          class:list={[
+            'rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink',
+            link('/skills') && 'bg-accent-soft text-ink',
+          ]}>Skills</a
+        >
+        <a
+          href="/topics/"
+          class:list={[
+            'rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink',
+            link('/topics') && 'bg-accent-soft text-ink',
+          ]}>热门方向</a
+        >
+        <a
+          href="/search/"
+          class:list={[
+            'rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink',
+            link('/search') && 'bg-accent-soft text-ink',
+          ]}>搜索</a
+        >
+        <a
+          href="/about"
+          class:list={[
+            'rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink',
+            link('/about') && 'bg-accent-soft text-ink',
+          ]}>关于</a
+        >
+        {
+          recommendUrl && (
+            <a
+              href={recommendUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink"
+            >
+              推荐收录
+            </a>
+          )
+        }
+        <a href="/en/" class="rounded-md px-2 py-1 no-underline hover:bg-surface hover:text-ink">EN</a>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ink: 12 15 20;
+    --color-ink-muted: 92 101 120;
+    --color-surface: 246 244 239;
+    --color-surface-card: 255 255 255;
+    --color-surface-border: 230 226 216;
+    --color-accent: 232 93 4;
+    --color-accent-soft: 255 243 230;
+    --shadow-card: 0 1px 0 rgb(12 15 20 / 0.06), 0 12px 40px rgb(12 15 20 / 0.08);
+  }
+
+  .dark {
+    --color-ink: 232 234 239;
+    --color-ink-muted: 154 163 181;
+    --color-surface: 12 15 20;
+    --color-surface-card: 20 25 34;
+    --color-surface-border: 42 49 64;
+    --color-accent: 255 143 63;
+    --color-accent-soft: 61 36 8;
+    --shadow-card: 0 1px 0 rgb(0 0 0 / 0.25), 0 12px 40px rgb(0 0 0 / 0.35);
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply bg-surface text-ink font-sans min-h-screen transition-colors duration-200;
+  }
+
+  a {
+    @apply text-accent underline-offset-2 hover:underline;
+  }
+}
+
+@layer utilities {
+  .prose-github {
+    @apply prose prose-neutral max-w-none dark:prose-invert prose-headings:font-display prose-headings:tracking-tight prose-a:text-accent prose-code:rounded prose-code:bg-surface prose-code:px-1 prose-code:py-0.5 prose-pre:bg-ink prose-pre:text-surface dark:prose-pre:bg-zinc-900 dark:prose-pre:text-zinc-100;
+  }
+}

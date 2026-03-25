@@ -1,0 +1,31 @@
+{
+  "name": "github-hot",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "pagefind": "pagefind --site dist --output-path dist/pagefind",
+    "build:search": "npm run build && npm run pagefind",
+    "deploy:cf": "npm run build:search && wrangler pages deploy dist --project-name=github-hot"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.17",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.5",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro": "^5.16.7",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "pagefind": "^1.4.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.77.0"
+  }
+}

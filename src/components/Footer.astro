@@ -1,0 +1,30 @@
+---
+import { getRecommendIssueUrl } from '../site.config';
+
+const year = new Date().getFullYear();
+const recommendUrl = getRecommendIssueUrl();
+const origin = Astro.site ?? Astro.url.origin;
+const rssHref = new URL('/rss.xml', origin).href;
+---
+
+<footer class="mt-16 border-t border-surface-border bg-surface-card">
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      <a href={rssHref} class="font-medium text-accent no-underline">RSS 订阅</a>
+      <a href="/en/" class="text-ink-muted no-underline hover:text-accent">English</a>
+      {
+        recommendUrl && (
+          <a href={recommendUrl} target="_blank" rel="noopener noreferrer" class="text-ink-muted no-underline hover:text-accent">
+            推荐收录（GitHub Issue）
+          </a>
+        )
+      }
+    </div>
+    <p class="mt-4 text-sm text-ink-muted">
+      © {year} GitHub Hot — 精选开源项目与 Agent Skills 收录。数据来自社区与 GitHub，请以各仓库说明为准。
+    </p>
+    <p class="mt-2 text-xs text-ink-muted">
+      本站为静态站点，内容以 Markdown 维护；欢迎通过 Issue 推荐新项目。邮件周刊规划中，更新请优先使用 RSS。
+    </p>
+  </div>
+</footer>
