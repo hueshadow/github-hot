@@ -1,5 +1,0 @@
-# Cloudflare Pages — 与 `wrangler pages deploy` / CI 中的 project 名称保持一致
-name = "github-hot"
-compatibility_date = "2024-11-01"
-
-# 静态站点无 Workers 运行时逻辑；`pages deploy` 的目录由 npm script 传入

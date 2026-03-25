@@ -36,7 +36,7 @@ npm run preview
 ### 方式 A：控制台连接 Git（推荐入门）
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**。
-2. 授权并选择本仓库；创建项目名建议与 [`wrangler.toml`](wrangler.toml) 中 `name`（默认 `github-hot`）一致，便于本地命令对齐。
+2. 授权并选择本仓库；项目名称建议 **`github-hot`**（与 `deploy:cf` 脚本一致）。**请勿**在仓库根目录提交 `wrangler.toml`（仅用 Git 集成部署时），否则易触发「构建成功、部署到全球网络失败」；本地 Wrangler 可参考 [`wrangler.toml.example`](wrangler.toml.example)。
 3. **构建设置**：
    - **Framework preset**：None 或 Astro（若可选）
    - **Build command**：`npm run build:search`
@@ -68,6 +68,14 @@ npm run deploy:cf
 3. （推荐）**Variables** 中添加 `PUBLIC_SITE_URL`（及可选 `PUBLIC_GITHUB_REPO`），并在工作流里「Build site + Pagefind」步骤下自行增加 `env` 传入（与本地 `astro.config` 一致）。
 4. 将工作流中的 `projectName: github-hot` 改成你在 Cloudflare 上实际的 Pages 项目名（若不同）。
 
+### 部署阶段失败（构建成功、Deploying 红叉）
+
+常见原因与处理：
+
+1. **根目录存在 `wrangler.toml`**：Pages 通过 Git 构建时可能按 Workers 解析，导致上传阶段失败。解决：删除仓库中的 `wrangler.toml`（本仓库已移除），仅保留 `wrangler.toml.example` 供本地参考。
+2. **输出目录错误**：须为 **`dist`**，构建命令须为 **`npm run build:search`**（或等价的 `build` + Pagefind）。
+3. 在 Cloudflare 该次部署里 **Download log**，查看 `Deploying` 步骤后的具体报错；若与权限、配额相关，需检查账户与 Token。
+
 ## Phase 3 能力（增长与体验）
 
 - **RSS**：构建后访问 `/rss.xml`；`<head>` 内已声明 `rel="alternate"` 便于阅读器发现。
@@ -82,7 +90,7 @@ npm run deploy:cf
 - **话题配置**：[`src/data/seo-topics.ts`](src/data/seo-topics.ts) 定义 `/topics/{slug}/` 与 `/en/topics/{slug}/` 的文案、匹配词与聚合逻辑。
 - **条目匹配**：在 Markdown frontmatter 中填写 `tags` 与 `seo_aliases`（英文词、空格短语请加 YAML 引号）。匹配规则为归一化后的子串包含关系，详见 `entryMatchesTopic`。
 - **可选覆盖**：`seo_title` / `seo_description` 可覆盖详情页的 `<title>` 与 meta description。
-- **技术项**：`public` 下无静态 `robots.txt`，构建生成 [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts)；sitemap 在 [`astro.config.mjs`](astro.config.mjs) 的 `serialize` 中为话题页提高 `priority`。
+- **技术项**：`public` 下无静态 `robots.txt`，构建生成 [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts)；sitemap 在 [`astro.config.mjs`](astro.config.mjs) 的 `serialize` 中为话题页提高 `priority`。Git 集成部署时不要提交根目录 `wrangler.toml`。
 
 ## 环境变量
 

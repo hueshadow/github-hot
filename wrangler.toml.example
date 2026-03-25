@@ -1,0 +1,6 @@
+# 仅用于本地 `npm run deploy:cf`（Wrangler CLI）。
+# 不要将此文件复制为 wrangler.toml 并提交：Cloudflare Pages「连接 Git」构建时，
+# 仓库根目录的 wrangler.toml 可能被误判为 Workers 配置，导致「构建成功但部署失败」。
+
+name = "github-hot"
+compatibility_date = "2024-11-01"
