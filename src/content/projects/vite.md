@@ -1,21 +1,21 @@
 ---
 name: Vite
-slug: "vite"
-repo_url: https://github.com/vitejs/vite
-category: "Web 框架 / 前端"
-category_slug: "web-frontend"
+slug: vite
+repo_url: 'https://github.com/vitejs/vite'
+category: Web 框架 / 前端
+category_slug: web-frontend
 tags:
   - 构建工具
   - 前端
   - ESM
 description: 下一代前端构建工具，极速冷启动与按需编译。
-homepage: https://vite.dev
-docs_url: https://vite.dev/guide/
-stars: 75000
-forks: 6000
+homepage: 'https://vite.dev'
+docs_url: 'https://vite.dev/guide/'
+stars: 79361
+forks: 7960
 language: TypeScript
-last_updated: '2026-03-18'
-added_at: 2026-03-18
+last_updated: '2026-03-26'
+added_at: 2026-03-18T00:00:00.000Z
 is_featured: false
 seo_aliases:
   - vercel

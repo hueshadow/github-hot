@@ -1,20 +1,20 @@
 ---
 name: n8n
-slug: "n8n"
-repo_url: https://github.com/n8n-io/n8n
+slug: n8n
+repo_url: 'https://github.com/n8n-io/n8n'
 category: 效率工具
-category_slug: "productivity"
+category_slug: productivity
 tags:
   - 自动化
   - 工作流
   - 集成
 description: 可视化工作流自动化，可自托管，连接数百种服务。
-homepage: https://n8n.io
-stars: 65000
-forks: 12000
+homepage: 'https://n8n.io'
+stars: 181099
+forks: 56166
 language: TypeScript
-last_updated: '2026-03-19'
-added_at: 2026-03-16
+last_updated: '2026-03-26'
+added_at: 2026-03-16T00:00:00.000Z
 is_featured: false
 ---
 

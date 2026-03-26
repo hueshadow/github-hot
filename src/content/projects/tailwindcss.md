@@ -1,20 +1,20 @@
 ---
-name: "Tailwind CSS"
-slug: "tailwindcss"
-repo_url: https://github.com/tailwindlabs/tailwindcss
-category: "Web 框架 / 前端"
-category_slug: "web-frontend"
+name: Tailwind CSS
+slug: tailwindcss
+repo_url: 'https://github.com/tailwindlabs/tailwindcss'
+category: Web 框架 / 前端
+category_slug: web-frontend
 tags:
   - CSS
   - 设计系统
   - UI
 description: 实用优先的 CSS 框架，通过组合类名快速搭建界面。
-homepage: https://tailwindcss.com
-stars: 90000
-forks: 5000
+homepage: 'https://tailwindcss.com'
+stars: 94188
+forks: 5126
 language: TypeScript
-last_updated: '2026-03-12'
-added_at: 2026-03-17
+last_updated: '2026-03-25'
+added_at: 2026-03-17T00:00:00.000Z
 is_featured: false
 seo_aliases:
   - vercel

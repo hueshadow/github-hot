@@ -1,9 +1,9 @@
 ---
 name: agent-reach
-slug: "agent-reach"
-repo_url: https://github.com/modelcontextprotocol/servers
+slug: agent-reach
+repo_url: 'https://github.com/modelcontextprotocol/servers'
 category: 搜索研究
-category_slug: "research"
+category_slug: research
 tags:
   - Cursor
   - Codex
@@ -14,17 +14,17 @@ compatible_with:
   - Codex
 skill_type: 搜索研究
 install_command: 按各 Agent 的 skill 安装方式配置；此处仓库为生态参考。
-stars: 0
-forks: 0
-language: 其他
-last_updated: '2026-03-08'
-added_at: 2026-03-18
+stars: 82108
+forks: 10077
+language: TypeScript
+last_updated: '2026-03-17'
+added_at: 2026-03-18T00:00:00.000Z
 is_featured: false
 seo_aliases:
   - openclaw
   - clawdbot
   - clawbot
-  - "agent browser"
+  - agent browser
   - mcp
   - clawhub
 ---

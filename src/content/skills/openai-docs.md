@@ -1,9 +1,9 @@
 ---
 name: openai-docs
-slug: "openai-docs"
-repo_url: https://github.com/openai/openai-python
+slug: openai-docs
+repo_url: 'https://github.com/openai/openai-python'
 category: 文档写作
-category_slug: "docs-writing"
+category_slug: docs-writing
 tags:
   - OpenAI
   - API
@@ -13,11 +13,11 @@ compatible_with:
   - Codex
 skill_type: 文档写作
 install_command: Codex 内置技能；以 OpenAI 官方文档为准。
-stars: 0
-forks: 0
-language: 其他
-last_updated: '2026-03-10'
-added_at: 2026-03-17
+stars: 30344
+forks: 4656
+language: Python
+last_updated: '2026-03-25'
+added_at: 2026-03-17T00:00:00.000Z
 is_featured: false
 seo_aliases:
   - qwen

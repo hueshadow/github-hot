@@ -1,9 +1,9 @@
 ---
 name: deep-research
-slug: "deep-research"
-repo_url: https://github.com/openai/codex
+slug: deep-research
+repo_url: 'https://github.com/openai/codex'
 category: 搜索研究
-category_slug: "research"
+category_slug: research
 tags:
   - Codex
   - 研究
@@ -13,17 +13,17 @@ compatible_with:
   - Codex
 skill_type: 搜索研究
 install_command: 随 Codex 环境分发；以官方文档为准。
-stars: 0
-forks: 0
-language: 其他
-last_updated: '2026-03-01'
-added_at: 2026-03-20
+stars: 67640
+forks: 9049
+language: Rust
+last_updated: '2026-03-26'
+added_at: 2026-03-20T00:00:00.000Z
 is_featured: true
 seo_aliases:
   - codex
   - claude
-  - "claude code"
-  - "everything claude"
+  - claude code
+  - everything claude
 ---
 
 ## 能做什么

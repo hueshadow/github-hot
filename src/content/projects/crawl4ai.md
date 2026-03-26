@@ -1,22 +1,22 @@
 ---
-name: "Crawl4AI（小龙虾）"
-slug: "crawl4ai"
-repo_url: https://github.com/unclecode/crawl4ai
-category: "数据 / 爬虫"
-category_slug: "data-crawler"
+name: Crawl4AI（小龙虾）
+slug: crawl4ai
+repo_url: 'https://github.com/unclecode/crawl4ai'
+category: 数据 / 爬虫
+category_slug: data-crawler
 tags:
   - 爬虫
   - AI
   - LLM
   - Python
 description: 为 LLM 与 AI 应用打造的高性能异步网页爬取与内容提取框架。
-homepage: https://crawl4ai.com
-docs_url: https://docs.crawl4ai.com
-stars: 12000
-forks: 900
+homepage: 'https://crawl4ai.com'
+docs_url: 'https://docs.crawl4ai.com'
+stars: 62579
+forks: 6391
 language: Python
-last_updated: '2026-03-01'
-added_at: 2026-03-20
+last_updated: '2026-03-25'
+added_at: 2026-03-20T00:00:00.000Z
 is_featured: true
 seo_aliases:
   - crawl4ai

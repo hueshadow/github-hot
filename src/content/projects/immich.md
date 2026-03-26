@@ -1,7 +1,7 @@
 ---
 name: Immich
-slug: "immich"
-repo_url: https://github.com/immich-app/immich
+slug: immich
+repo_url: 'https://github.com/immich-app/immich'
 category: 其他
 category_slug: other
 tags:
@@ -9,12 +9,12 @@ tags:
   - 自托管
   - 照片
 description: 高性能自托管照片与视频备份，类 Google Photos 体验。
-homepage: https://immich.app
-stars: 65000
-forks: 3500
+homepage: 'https://immich.app'
+stars: 95705
+forks: 5181
 language: TypeScript
-last_updated: '2026-03-14'
-added_at: 2026-03-15
+last_updated: '2026-03-26'
+added_at: 2026-03-15T00:00:00.000Z
 is_featured: false
 ---
 
