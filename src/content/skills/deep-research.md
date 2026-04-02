@@ -13,10 +13,10 @@ compatible_with:
   - Codex
 skill_type: 搜索研究
 install_command: 随 Codex 环境分发；以官方文档为准。
-stars: 70481
-forks: 9755
+stars: 71977
+forks: 10056
 language: Rust
-last_updated: '2026-04-01'
+last_updated: '2026-04-02'
 added_at: 2026-03-20T00:00:00.000Z
 is_featured: true
 seo_aliases:
