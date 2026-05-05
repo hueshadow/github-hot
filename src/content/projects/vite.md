@@ -11,10 +11,10 @@ tags:
 description: 下一代前端构建工具，极速冷启动与按需编译。
 homepage: 'https://vite.dev'
 docs_url: 'https://vite.dev/guide/'
-stars: 80374
-forks: 8121
+stars: 80391
+forks: 8123
 language: TypeScript
-last_updated: '2026-05-04'
+last_updated: '2026-05-05'
 added_at: 2026-03-18T00:00:00.000Z
 is_featured: false
 seo_aliases:
