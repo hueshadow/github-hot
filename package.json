@@ -8,13 +8,16 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "pagefind": "pagefind --site dist --output-path dist/pagefind",
     "build:search": "npm run build && npm run pagefind",
-    "deploy:cf": "npm run build:search && wrangler pages deploy dist --project-name=github-hot"
+    "deploy:cf": "npm run build:search && wrangler pages deploy dist --project-name=github-hot",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.5",
@@ -26,6 +29,6 @@
     "gray-matter": "^4.0.3",
     "pagefind": "^1.4.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.77.0"
+    "wrangler": "^4.88.0"
   }
 }
