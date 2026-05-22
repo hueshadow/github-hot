@@ -13,8 +13,8 @@ compatible_with:
   - Cursor
 skill_type: 前端设计
 install_command: 在 Cursor Skills 目录按官方指引安装；仓库链接仅作参考文档示例。
-stars: 8518
-forks: 960
+stars: 8528
+forks: 963
 language: TypeScript
 last_updated: '2026-05-19'
 added_at: 2026-03-19T00:00:00.000Z

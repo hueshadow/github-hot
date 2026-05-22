@@ -14,10 +14,10 @@ compatible_with:
   - Codex
 skill_type: 搜索研究
 install_command: 按各 Agent 的 skill 安装方式配置；此处仓库为生态参考。
-stars: 86020
-forks: 10772
+stars: 86070
+forks: 10781
 language: TypeScript
-last_updated: '2026-05-17'
+last_updated: '2026-05-21'
 added_at: 2026-03-18T00:00:00.000Z
 is_featured: false
 seo_aliases:
