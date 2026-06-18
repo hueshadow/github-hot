@@ -3,12 +3,15 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from "@astrojs/cloudflare";
+
 // 部署到生产前将 site 改为你的域名（用于 sitemap / OG 绝对 URL）
 const site = process.env.PUBLIC_SITE_URL ?? 'https://github-hot.example.com';
 
 export default defineConfig({
   site,
   output: 'static',
+
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap({
@@ -34,4 +37,6 @@ export default defineConfig({
       },
     }),
   ],
+
+  adapter: cloudflare()
 });
