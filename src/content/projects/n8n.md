@@ -10,10 +10,10 @@ tags:
   - 集成
 description: 可视化工作流自动化，可自托管，连接数百种服务。
 homepage: 'https://n8n.io'
-stars: 192989
-forks: 58642
+stars: 193105
+forks: 58655
 language: TypeScript
-last_updated: '2026-06-18'
+last_updated: '2026-06-19'
 added_at: 2026-03-16T00:00:00.000Z
 is_featured: false
 ---
