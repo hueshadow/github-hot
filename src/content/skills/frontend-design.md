@@ -16,7 +16,7 @@ install_command: 在 Cursor Skills 目录按官方指引安装；仓库链接仅
 stars: 8778
 forks: 996
 language: TypeScript
-last_updated: '2026-06-29'
+last_updated: '2026-07-01'
 added_at: 2026-03-19T00:00:00.000Z
 is_featured: true
 seo_aliases:
