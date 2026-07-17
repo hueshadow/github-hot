@@ -10,10 +10,10 @@ tags:
   - UI
 description: 实用优先的 CSS 框架，通过组合类名快速搭建界面。
 homepage: 'https://tailwindcss.com'
-stars: 96007
-forks: 5513
+stars: 95988
+forks: 5406
 language: TypeScript
-last_updated: '2026-07-15'
+last_updated: '2026-07-16'
 added_at: 2026-03-17T00:00:00.000Z
 is_featured: false
 seo_aliases:
