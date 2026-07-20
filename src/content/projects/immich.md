@@ -10,10 +10,10 @@ tags:
   - 照片
 description: 高性能自托管照片与视频备份，类 Google Photos 体验。
 homepage: 'https://immich.app'
-stars: 108100
-forks: 6261
+stars: 108206
+forks: 6276
 language: TypeScript
-last_updated: '2026-07-18'
+last_updated: '2026-07-20'
 added_at: 2026-03-15T00:00:00.000Z
 is_featured: false
 ---
