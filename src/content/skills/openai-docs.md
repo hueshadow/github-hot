@@ -13,10 +13,10 @@ compatible_with:
   - Codex
 skill_type: 文档写作
 install_command: Codex 内置技能；以 OpenAI 官方文档为准。
-stars: 31225
-forks: 4990
+stars: 31234
+forks: 4997
 language: Python
-last_updated: '2026-07-24'
+last_updated: '2026-07-26'
 added_at: 2026-03-17T00:00:00.000Z
 is_featured: false
 seo_aliases:
