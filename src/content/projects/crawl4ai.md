@@ -12,8 +12,8 @@ tags:
 description: 为 LLM 与 AI 应用打造的高性能异步网页爬取与内容提取框架。
 homepage: 'https://crawl4ai.com'
 docs_url: 'https://docs.crawl4ai.com'
-stars: 87549
-forks: 9131
+stars: 87583
+forks: 9140
 language: Python
 last_updated: '2026-11-19'
 added_at: 2026-03-20T00:00:00.000Z
